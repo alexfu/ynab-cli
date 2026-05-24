@@ -14,6 +14,7 @@
             devShells.default = with pkgs; mkShell {
               packages = [
                 # list packages here
+                go
               ];
             };
           };
