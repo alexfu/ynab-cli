@@ -1,10 +1,9 @@
 /*
 Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-
 */
 package main
 
-import "my-cli/cmd"
+import "ynab/cmd"
 
 func main() {
 	cmd.Execute()

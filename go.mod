@@ -1,4 +1,4 @@
-module my-cli
+module ynab
 
 go 1.25.9
 
