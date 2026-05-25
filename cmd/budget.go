@@ -3,7 +3,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 
 	"ynab/internal/auth"
@@ -13,17 +12,20 @@ import (
 )
 
 var budgetCmd = &cobra.Command{
-	Use:   "budget",
-	Short: "List or view a budget",
-	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-		if !auth.LoggedIn() {
-			return errors.New("not logged in")
-		}
-		return nil
-	},
+	Use:               "budget",
+	Short:             "List or view a budget",
+	PersistentPreRunE: auth.EnsureLoggedIn,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		budgets, _ := ynab.Budgets()
-		fmt.Println(budgets)
+		budgets, err := ynab.Budgets()
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		for _, budget := range budgets {
+			fmt.Printf("%v\t%v\n", budget.ID, budget.Name)
+		}
+
 		return nil
 	},
 }
