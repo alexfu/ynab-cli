@@ -7,6 +7,7 @@ import (
 
 	"ynab/internal/auth"
 	"ynab/internal/ui"
+	"ynab/internal/utils"
 	"ynab/internal/ynab"
 
 	"github.com/brunomvsouza/ynab.go/api/budget"
@@ -26,13 +27,21 @@ var listCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		for _, budget := range budgets {
-			fmt.Printf("%v\t%v\n", budget.ID, budget.Name)
+
+		jsonOutput, _ := cmd.Flags().GetBool("json")
+		if jsonOutput {
+			jsonStr, _ := utils.ToJSONString(budgets)
+			fmt.Println(jsonStr)
+		} else {
+			for _, budget := range budgets {
+				fmt.Printf("%v\t%v\n", budget.ID, budget.Name)
+			}
 		}
 		return nil
 	},
 }
 
 func init() {
+	listCmd.Flags().Bool("json", false, "Output as JSON")
 	Cmd.AddCommand(listCmd)
 }
