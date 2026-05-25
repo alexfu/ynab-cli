@@ -18,6 +18,10 @@ func Logout() error {
 }
 
 func LoggedIn() bool {
-	_, err := keyring.Get(keyringService, keyringUser)
+	_, err := GetToken()
 	return err == nil
+}
+
+func GetToken() (string, error) {
+	return keyring.Get(keyringService, keyringUser)
 }
