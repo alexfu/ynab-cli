@@ -3,21 +3,32 @@
 package auth
 
 import (
+	"errors"
+
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 )
 
-type loginFlowModel struct {
+type loginUIModel struct {
 	textInput textinput.Model
 	canceled  bool
 }
 
-func (m loginFlowModel) Init() tea.Cmd {
+func newLoginUIModel() loginUIModel {
+	textInput := textinput.New()
+	textInput.Placeholder = "Enter YNAB Token"
+	textInput.Focus()
+	return loginUIModel{
+		textInput: textInput,
+	}
+}
+
+func (m loginUIModel) Init() tea.Cmd {
 	return textinput.Blink
 }
 
-func (m loginFlowModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m loginUIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
@@ -41,7 +52,7 @@ func (m loginFlowModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m loginFlowModel) View() tea.View {
+func (m loginUIModel) View() tea.View {
 	title := "Logging into YNAB"
 
 	helpText := lipgloss.NewStyle().
@@ -61,11 +72,14 @@ func (m loginFlowModel) View() tea.View {
 	return view
 }
 
-func NewLoginFlow() loginFlowModel {
-	textInput := textinput.New()
-	textInput.Placeholder = "Enter YNAB Token"
-	textInput.Focus()
-	return loginFlowModel{
-		textInput: textInput,
+func NewLoginUI() error {
+	model, err := tea.NewProgram(newLoginUIModel()).Run()
+	if err != nil {
+		return err
 	}
+	if model.(loginUIModel).canceled {
+		return errors.New("login cancelled")
+	}
+	token := model.(loginUIModel).textInput.Value()
+	return Login(token)
 }
