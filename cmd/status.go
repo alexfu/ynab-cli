@@ -10,7 +10,6 @@ import (
 	"github.com/zalando/go-keyring"
 )
 
-// statusCmd represents the status command
 var statusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "Show status of auth.",
