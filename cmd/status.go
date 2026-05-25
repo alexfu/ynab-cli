@@ -31,5 +31,5 @@ var statusCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(statusCmd)
+	authCmd.AddCommand(statusCmd)
 }
