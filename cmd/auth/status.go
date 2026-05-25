@@ -1,6 +1,6 @@
 // Copyright © 2026 Alex Fu <alexfu@fastmail.com>
 
-package cmd
+package auth
 
 import (
 	"fmt"
@@ -39,5 +39,5 @@ var statusCmd = &cobra.Command{
 }
 
 func init() {
-	authCmd.AddCommand(statusCmd)
+	Cmd.AddCommand(statusCmd)
 }

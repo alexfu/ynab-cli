@@ -1,6 +1,6 @@
 // Copyright © 2026 Alex Fu <alexfu@fastmail.com>
 
-package cmd
+package auth
 
 import (
 	"errors"
@@ -32,5 +32,5 @@ var logoutCmd = &cobra.Command{
 }
 
 func init() {
-	authCmd.AddCommand(logoutCmd)
+	Cmd.AddCommand(logoutCmd)
 }

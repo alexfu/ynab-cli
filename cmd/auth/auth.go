@@ -1,16 +1,12 @@
 // Copyright © 2026 Alex Fu <alexfu@fastmail.com>
 
-package cmd
+package auth
 
 import (
 	"github.com/spf13/cobra"
 )
 
-var authCmd = &cobra.Command{
+var Cmd = &cobra.Command{
 	Use:   "auth",
 	Short: "Manage ynab-cli authentication",
-}
-
-func init() {
-	rootCmd.AddCommand(authCmd)
 }

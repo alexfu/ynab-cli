@@ -5,6 +5,7 @@ package cmd
 import (
 	"os"
 
+	"ynab/cmd/auth"
 	"ynab/cmd/budget"
 
 	"github.com/spf13/cobra"
@@ -27,5 +28,5 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(budget.Cmd)
+	rootCmd.AddCommand(budget.Cmd, auth.Cmd)
 }
