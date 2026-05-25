@@ -1,6 +1,6 @@
 // Copyright © 2026 Alex Fu <alexfu@fastmail.com>
 
-package cmd
+package budget
 
 import (
 	"fmt"
@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var budgetCmd = &cobra.Command{
-	Use:               "budget",
-	Short:             "List or view a budget",
+var listCmd = &cobra.Command{
+	Use:               "list",
+	Short:             "List budgets",
 	PersistentPreRunE: auth.EnsureLoggedIn,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		budgets, err := ynab.Budgets()
@@ -31,5 +31,5 @@ var budgetCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(budgetCmd)
+	Cmd.AddCommand(listCmd)
 }
