@@ -5,7 +5,7 @@ package cmd
 import (
 	"fmt"
 
-	"ynab/internal/auth"
+	"ynab/internal/ui"
 
 	"github.com/spf13/cobra"
 )
@@ -19,7 +19,7 @@ var loginCmd = &cobra.Command{
 	Use:   "login",
 	Short: "Log in to YNAB",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := auth.NewLoginUI()
+		err := ui.NewLoginUI()
 		if err != nil {
 			return err
 		}

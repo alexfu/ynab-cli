@@ -5,7 +5,7 @@ package budget
 import (
 	"fmt"
 
-	"ynab/internal/auth"
+	"ynab/internal/hooks"
 	"ynab/internal/ui"
 	"ynab/internal/utils"
 	"ynab/internal/ynab"
@@ -17,7 +17,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:               "list",
 	Short:             "List budgets",
-	PersistentPreRunE: auth.EnsureLoggedIn,
+	PersistentPreRunE: hooks.EnsureLoggedIn,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var budgets []*budget.Summary
 		var err error

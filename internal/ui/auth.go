@@ -1,10 +1,13 @@
 // Copyright © 2026 Alex Fu <alexfu@fastmail.com>
 
-package auth
+package ui
 
 import (
 	"errors"
 	"os"
+
+	"ynab/internal/auth"
+	"ynab/internal/ynab"
 
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
@@ -75,13 +78,17 @@ func (m loginUIModel) View() tea.View {
 }
 
 func NewLoginUI() error {
-	model, err := tea.NewProgram(newLoginUIModel(), tea.WithOutput(os.Stderr)).Run()
+	m, err := tea.NewProgram(newLoginUIModel(), tea.WithOutput(os.Stderr)).Run()
 	if err != nil {
 		return err
 	}
-	if model.(loginUIModel).canceled {
+	model := m.(loginUIModel)
+	if model.canceled {
 		return errors.New("login cancelled")
 	}
-	token := model.(loginUIModel).textInput.Value()
-	return Login(token)
+	token := model.textInput.Value()
+	if !ynab.TokenValid(token) {
+		return errors.New("token not valid")
+	}
+	return auth.SaveToken(token)
 }
