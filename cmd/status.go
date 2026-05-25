@@ -1,6 +1,5 @@
-/*
-Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-*/
+// Copyright © 2026 Alex Fu <alexfu@fastmail.com>
+
 package cmd
 
 import (
