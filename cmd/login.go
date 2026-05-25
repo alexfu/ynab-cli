@@ -19,11 +19,7 @@ const (
 
 var loginCmd = &cobra.Command{
 	Use:   "login",
-	Short: "Store your YNAB API token in the OS keyring",
-	Long: `Login prompts for a YNAB Personal Access Token and stores it
-  securely in your operating system's keyring (macOS Keychain, GNOME
-  Keyring, or Windows Credential Manager). You only need to run this
-  once per machine.`,
+	Short: "Authenticate with ynab-cli",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Fprint(os.Stderr, "YNAB Personal Access Token: ")
 		tokenBytes, err := term.ReadPassword(int(os.Stdin.Fd()))

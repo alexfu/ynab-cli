@@ -12,7 +12,7 @@ import (
 
 var statusCmd = &cobra.Command{
 	Use:   "status",
-	Short: "Show status of auth.",
+	Short: "Show current status of auth",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		_, err := keyring.Get("ynab-cli", "default")
 		if err == nil {
