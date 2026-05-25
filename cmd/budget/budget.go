@@ -8,5 +8,5 @@ import (
 
 var Cmd = &cobra.Command{
 	Use:   "budget",
-	Short: "Manage budgets",
+	Short: "View budgets",
 }
