@@ -9,12 +9,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "ynab",
-	Short: "YNAB CLI tool",
-	Long:  `Manage your YNAB budget through the terminal.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Use:          "ynab",
+	Short:        "YNAB CLI tool",
+	Long:         `Manage your YNAB budget through the terminal.`,
+	SilenceUsage: true,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
