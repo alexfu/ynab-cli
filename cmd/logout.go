@@ -3,7 +3,10 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
+
+	"ynab/internal/auth"
 
 	"github.com/spf13/cobra"
 	"github.com/zalando/go-keyring"
@@ -11,11 +14,16 @@ import (
 
 var logoutCmd = &cobra.Command{
 	Use:   "logout",
-	Short: "Clear authentication with ynab-cli",
+	Short: "Log out of YNAB",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := keyring.Delete("ynab-cli", "default")
+		err := auth.Logout()
 		if err != nil {
-			return fmt.Errorf("failed to logout: %w", err)
+			if errors.Is(err, keyring.ErrNotFound) {
+				fmt.Println("Already logged out!")
+				return nil
+			} else {
+				return fmt.Errorf("failed to logout: %w", err)
+			}
 		}
 
 		fmt.Println("Log out successful!")

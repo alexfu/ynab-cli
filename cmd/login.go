@@ -7,8 +7,9 @@ import (
 	"os"
 	"strings"
 
+	"ynab/internal/auth"
+
 	"github.com/spf13/cobra"
-	"github.com/zalando/go-keyring"
 	"golang.org/x/term"
 )
 
@@ -19,7 +20,7 @@ const (
 
 var loginCmd = &cobra.Command{
 	Use:   "login",
-	Short: "Authenticate with ynab-cli",
+	Short: "Log in to YNAB",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Fprint(os.Stderr, "YNAB Personal Access Token: ")
 		tokenBytes, err := term.ReadPassword(int(os.Stdin.Fd()))
@@ -34,7 +35,7 @@ var loginCmd = &cobra.Command{
 			return fmt.Errorf("token cannot be empty")
 		}
 
-		if err := keyring.Set(keyringService, keyringUser, token); err != nil {
+		if err := auth.Login(token); err != nil {
 			return fmt.Errorf("store token in keyring: %w", err)
 		}
 

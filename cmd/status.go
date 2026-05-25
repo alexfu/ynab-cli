@@ -3,26 +3,21 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 
+	"ynab/internal/auth"
+
 	"github.com/spf13/cobra"
-	"github.com/zalando/go-keyring"
 )
 
 var statusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "Show current status of auth",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		_, err := keyring.Get("ynab-cli", "default")
-		if err == nil {
+		if auth.LoggedIn() {
 			fmt.Println("Logged in.")
 		} else {
-			if errors.Is(err, keyring.ErrNotFound) {
-				fmt.Println("Not logged in. Run `ynab login`.")
-			} else {
-				return fmt.Errorf("read token from keyring: %w", err)
-			}
+			fmt.Println("Not logged in. Run `ynab auth login` to log in.")
 		}
 		return nil
 	},
