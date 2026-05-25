@@ -20,6 +20,7 @@ func newLoginUIModel() loginUIModel {
 	textInput := textinput.New()
 	textInput.Placeholder = "Enter YNAB Token"
 	textInput.Focus()
+	textInput.EchoMode = textinput.EchoPassword
 	return loginUIModel{
 		textInput: textInput,
 	}
