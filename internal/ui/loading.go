@@ -3,6 +3,8 @@
 package ui
 
 import (
+	"os"
+
 	"charm.land/bubbles/v2/spinner"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
@@ -51,6 +53,6 @@ func NewLoadingUI(work func()) error {
 	s := spinner.New()
 	s.Spinner = spinner.Dot
 	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Blue)
-	_, err := tea.NewProgram(loadingUI{spinner: s, work: loadCmd(work), loading: true}).Run()
+	_, err := tea.NewProgram(loadingUI{spinner: s, work: loadCmd(work), loading: true}, tea.WithOutput(os.Stderr)).Run()
 	return err
 }

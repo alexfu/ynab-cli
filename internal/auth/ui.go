@@ -4,6 +4,7 @@ package auth
 
 import (
 	"errors"
+	"os"
 
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
@@ -73,7 +74,7 @@ func (m loginUIModel) View() tea.View {
 }
 
 func NewLoginUI() error {
-	model, err := tea.NewProgram(newLoginUIModel()).Run()
+	model, err := tea.NewProgram(newLoginUIModel(), tea.WithOutput(os.Stderr)).Run()
 	if err != nil {
 		return err
 	}
