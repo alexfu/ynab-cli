@@ -8,7 +8,7 @@ import (
 )
 
 func EnsureLoggedIn(cmd *cobra.Command, args []string) error {
-	if !auth.LoggedIn() {
+	if !auth.HasToken() {
 		err := ui.NewLoginUI()
 		if err != nil {
 			return err

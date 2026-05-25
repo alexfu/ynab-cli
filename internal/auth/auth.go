@@ -19,7 +19,7 @@ func Logout() error {
 	return keyring.Delete(keyringService, keyringUser)
 }
 
-func LoggedIn() bool {
+func HasToken() bool {
 	_, err := GetToken()
 	return err == nil
 }

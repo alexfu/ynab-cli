@@ -8,8 +8,10 @@ import (
 	"text/tabwriter"
 
 	"ynab/internal/auth"
+	"ynab/internal/ui"
 	"ynab/internal/ynab"
 
+	"github.com/brunomvsouza/ynab.go/api/user"
 	"github.com/spf13/cobra"
 )
 
@@ -17,8 +19,12 @@ var statusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "Show current status of auth",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if auth.LoggedIn() {
-			user, err := ynab.GetUser()
+		if auth.HasToken() {
+			var user *user.User
+			var err error
+			ui.NewLoadingUI(func() {
+				user, err = ynab.GetUser()
+			})
 			if err != nil {
 				return err
 			}
